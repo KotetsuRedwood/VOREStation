@@ -2,6 +2,9 @@
 // Lets read our settings from the configuration file on startup too!
 //
 
+/datum/configuration
+	var/engine_map = "Random"		// Select which engine map we want.  Or "Random"
+
 /hook/startup/proc/read_vs_config()
 	var/list/Lines = file2list("config/config.txt")
 	for(var/t in Lines)
@@ -31,6 +34,8 @@
 				config.chat_webhook_url = value
 			if ("chat_webhook_key")
 				config.chat_webhook_key = value
+			if ("engine_map")
+				config.engine_map = value
 			if ("fax_export_dir")
 				config.fax_export_dir = value
 			if ("items_survive_digestion")
