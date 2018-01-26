@@ -54,6 +54,7 @@
 	var/datum/shuttle_web_master/master = null // The datum that does the coordination with the actual shuttle datum.
 	var/list/routes = list()			// Routes that are connected to this destination.
 	var/preferred_interim_area = null	// When building a new route, use this interim area.
+	var/skip_me = FALSE					// We will not autocreate this one. Some map must be doing it.
 
 	var/dock_target = null				// The tag_id that the shuttle will use to try to dock to the destination, if able.
 
@@ -195,6 +196,9 @@
 	var/list/destination_types = typesof(destination_class) - destination_class
 	for(var/new_type in destination_types)
 		var/datum/shuttle_destination/D = new new_type(src)
+		if(D.skip_me)
+			qdel(D)
+			continue
 		destinations += D
 
 	// Now start the process of connecting all of them.
